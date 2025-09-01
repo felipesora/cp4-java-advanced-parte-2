@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ferramentas</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+  </head>
+  <body>
+    <header class="cabecalho">
+      <h1>Gestor de Ferramentas</h1>
+      <a href="ferramenta-form.html" class="btn btn_nova_ferramenta">Nova Ferramenta</a>
+    </header>
+
+    <main class="container_main">
+      <section class="lista_cards">
+
+        <article class="card" th:each="ferramenta : ${ferramentas}">
+          <div class="card_cabecalho">
+            <h2 th:text="${ferramenta.nome}">Nome da ferramenta</h2>
+            <span th:switch="${ferramenta.tamanho.name()}">
+              <span th:case="'PEQUENO'">PEQUENO</span>
+              <span th:case="'MEDIO'">MÉDIO</span>
+              <span th:case="'GRANDE'">GRANDE</span>
+              <span th:case="*"
+                    th:text="${ferramenta.tamanho}">Outro</span>
+            </span>
+          </div>
+
+          <ul class="card_lista">
+            <li><strong>Tipo:</strong> <span th:text="${ferramenta.tipo}"></span></li>
+            <li><strong>Classificação:</strong> <span th:text="${ferramenta.classificacao}"></span></li>
+            <li><strong>Preço:</strong> R$ <span th:text="${ferramenta.preco}"></span></li>
+            <li><strong>Quantidade:</strong> <span th:text="${ferramenta.quantidade}"></span></li>
+          </ul>
+
+          <div class="card_botoes">
+            <a th:href="@{'/ferramentas/editar/' + ${ferramenta.id}}" class="btn btn_editar">Editar</a>
+            <a th:href="@{'/ferramentas/deletar/' + ${ferramenta.id}}" class="btn btn_excluir">Excluir</a>
+          </div>
+        </article>
+
+      </section>
+    </main>
+
+    <footer class="rodape">
+        <p>&copy; 2025 — Gestor de Ferramentas</p>
+    </footer>
+  </body>
+</html>

@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@RestController
+@Controller
 @RequestMapping("/ferramentas")
 public class FerramentaController {
 
@@ -27,19 +29,14 @@ public class FerramentaController {
     private FerramentaService service;
 
     @GetMapping
-    public ResponseEntity<List<FerramentaResponseDTO>> listarTodos() {
-        var ferramentas = service.listarTodos();
-
-        ferramentas.forEach(this::adicionarLinks);
-
-        return ResponseEntity.ok(ferramentas);
+    public String listarTodasFerramentas(Model model) {
+        model.addAttribute("ferramentas", service.listarTodos());
+        return "ferramentas";
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<FerramentaResponseDTO> buscarPorId(@PathVariable Long id) {
         var ferramenta = service.buscarPorId(id);
-
-        adicionarLinks(ferramenta);
 
         return ResponseEntity.ok(ferramenta);
     }
@@ -47,8 +44,6 @@ public class FerramentaController {
     @PostMapping
     public ResponseEntity<FerramentaResponseDTO> salvar(@RequestBody @Valid FerramentaRequestDTO dto, UriComponentsBuilder uriBuilder) {
         var ferramenta = service.salvar(FerramentaMapper.toEntity(dto));
-
-        adicionarLinks(ferramenta);
 
         var uri = uriBuilder.path("/ferramentas/{id}").buildAndExpand(ferramenta.getId()).toUri();
 
@@ -59,16 +54,12 @@ public class FerramentaController {
     public ResponseEntity<FerramentaResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid FerramentaRequestDTO dto) {
         var ferramentaAtualizada = service.atualizar(id, FerramentaMapper.toEntity(dto));
 
-        adicionarLinks(ferramentaAtualizada);
-
         return ResponseEntity.ok(ferramentaAtualizada);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<FerramentaResponseDTO> atualizarParcial(@PathVariable Long id, @RequestBody @Valid FerramentaPatchDTO dto) {
         var ferramentaAtualizada = FerramentaMapper.toDTO(service.atualizarParcial(id, dto));
-
-        adicionarLinks(ferramentaAtualizada);
 
         return ResponseEntity.ok(ferramentaAtualizada);
     }
@@ -77,18 +68,6 @@ public class FerramentaController {
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private FerramentaResponseDTO adicionarLinks(FerramentaResponseDTO ferramenta) {
-        ferramenta.add(linkTo(methodOn(FerramentaController.class).buscarPorId(ferramenta.getId())).withRel("self"));
-
-        ferramenta.add(linkTo(methodOn(FerramentaController.class).atualizar(ferramenta.getId(), null)).withRel("update"));
-
-        ferramenta.add(linkTo(methodOn(FerramentaController.class).atualizarParcial(ferramenta.getId(), null)).withRel("partialUpdate"));
-
-        ferramenta.add(linkTo(methodOn(FerramentaController.class).deletar(ferramenta.getId())).withRel("delete"));
-
-        return ferramenta;
     }
 
 }

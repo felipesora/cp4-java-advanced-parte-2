@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --bg: #0b0d10;
+  --text: #e9edf1;
+  --font: "Montserrat", sans-serif;
+  --border: #1e242b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(1200px 600px at 20% -10%,#132033 0%,transparent 55%),
+    radial-gradient(1000px 500px at 120% 10%, #1a1033 0%, transparent 45%),
+    var(--bg);
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* opcional: mantém ao rolar */
+  background-size: cover;       /* opcional: garante que cubra a tela */
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  background-color: #101418e6;
+  border-bottom: 1px solid var(--border);
+}
+
+.cabecalho h1 {
+  font-size: 1.8rem;
+}
+
+.btn_nova_ferramenta,
+.btn_salvar {
+  background: #22c55e;
+}
+
+.btn_salvar {
+  border: none;
+  cursor: pointer;
+}
+
+.btn_nova_ferramenta:hover,
+.btn_salvar:hover {
+  background: #16a34a;
+}
+
+.btn_voltar,
+.btn_cancelar {
+  background: transparent;
+  border:1px solid var(--border);
+  color:#cbd5e1;
+}
+
+.btn_voltar:hover,
+.btn_cancelar:hover {
+  background:#141a20;
+}
+
+.rodape {
+  padding: 28px 24px;
+  border-top: 1px solid var(--border);
+  color: #7c8894;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+.container_main {
+  margin: 25px auto;
+}
+
+.lista_cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+}
+
+.card {
+  background-color: #ffffff05;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 300px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #26303a;
+}
+
+.card_cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card_cabecalho h2 {
+  font-size: 18px;
+}
+
+.card_cabecalho span {
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  background: #1e2730;
+  border: 1px solid var(--border);
+  color: #b5c4d6;
+}
+
+.card_lista {
+  list-style: none;
+  margin: 10px 0 15px 0;
+  color: #cbd5e1;
+}
+
+.card_lista li {
+  padding: 3px 0;
+}
+
+.card_lista strong {
+  color: #93a8bd;
+  font-weight: 600;
+}
+
+.card_botoes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn_editar {
+  background: #3b82f6;
+}
+
+.btn_editar:hover {
+  background: #2563eb;
+}
+
+.btn_excluir {
+  background: #ef4444;
+}
+
+.btn_excluir:hover {
+  background: #dc2626;
+}
+
+.container_formulario {
+    display: flex;
+    justify-content: center;
+}
+
+.formulario {
+    width:min(1100px, 92%);
+    background: #101418; 
+    border:1px solid var(--border); 
+    border-radius: 16px;
+    padding: 20px; 
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+.formulario_campo {
+    display:flex; 
+    flex-direction:column; 
+    gap:8px; 
+    margin-bottom:14px;
+}
+
+.formulario_campo label {
+    font-weight:600;
+    color:#c7d2fe;
+}
+
+.formulario_campo input, .formulario_campo select{
+  background:#0f1419; 
+  color:#e5eef7; 
+  border:1px solid #1e2730;
+  padding:12px 12px; 
+  border-radius:12px; 
+  outline:none; 
+  transition:border .15s ease, box-shadow .15s ease;
+}
+
+.formulario_campo input:focus, .formulario_campo select:focus{
+    border-color:#395980; 
+    box-shadow: 0 0 0 3px rgba(59,130,246,.25);
+}
+
+.obrigatorio {
+    color: #7c8894; font-size:12px
+}
+
+.formulario_botoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+}
