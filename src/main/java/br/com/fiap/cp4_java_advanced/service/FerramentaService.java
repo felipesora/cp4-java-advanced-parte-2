@@ -40,7 +40,7 @@ public class FerramentaService {
 
     public FerramentaResponseDTO atualizar(Long id, Ferramenta ferramentaNova) {
             var ferramentaAtual = repository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Ferramenta com id: " + id + " não encontrada"));
+                    .orElseThrow(() -> new RuntimeException("Ferramenta com id: " + id + " não encontrada"));
 
             ferramentaAtual.setNome(ferramentaNova.getNome());
             ferramentaAtual.setTipo(ferramentaNova.getTipo());

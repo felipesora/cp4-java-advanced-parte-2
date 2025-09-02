@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ferramentas</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/modal.js}" defer></script>
   </head>
   <body>
     <header class="cabecalho">
@@ -36,7 +37,7 @@
 
           <div class="card_botoes">
             <a th:href="@{'/ferramentas/editar/' + ${ferramenta.id}}" class="btn btn_editar">Editar</a>
-            <button class="btn btn_excluir" th:onclick="'abrirModal(' + ${ferramenta.id} + ');'">Excluir</button>
+            <button class="btn btn_excluir" th:onclick="'abrirModal(' + ${ferramenta.id} + ')'">Excluir</button>
           </div>
         </article>
 
@@ -58,25 +59,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-      let ferramentaIdParaExcluir = null;
-
-      function abrirModal(id) {
-        ferramentaIdParaExcluir = id;
-        document.getElementById('modalExcluir').style.display = 'flex';
-      }
-
-      function fecharModal() {
-        ferramentaIdParaExcluir = null;
-        document.getElementById('modalExcluir').style.display = 'none';
-      }
-
-      document.getElementById('confirmarExcluir').addEventListener('click', function() {
-        if(ferramentaIdParaExcluir) {
-          window.location.href = '/ferramentas/deletar/' + ferramentaIdParaExcluir;
-        }
-      });
-    </script>
   </body>
 </html>
