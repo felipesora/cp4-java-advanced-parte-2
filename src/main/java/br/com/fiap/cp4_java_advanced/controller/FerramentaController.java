@@ -35,9 +35,15 @@ public class FerramentaController {
     }
 
     @GetMapping("/cadastrar")
-    public String cadastrarNovaFerramenta(Model model) {
+    public String NovaFerramentaForm(Model model) {
         model.addAttribute("ferramenta", new Ferramenta());
         return "ferramenta-form";
+    }
+
+    @PostMapping
+    public String salvarFerramenta(Ferramenta ferramenta) {
+        service.salvar(ferramenta);
+        return "redirect:/ferramentas";
     }
 
     @PutMapping("/{id}")
