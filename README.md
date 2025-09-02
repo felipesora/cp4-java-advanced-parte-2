@@ -11,7 +11,7 @@
 - [⚙️ Configuração do Spring Initializr](#-configuração-do-spring-initializr)
 - [🚀 Como Rodar a Aplicação](#-como-rodar-a-aplicação)
 - [🧱 Estrutura da Entidade Ferramenta](#-estrutura-da-entidade-ferramenta)
-- [📡 Endpoints da API](#-endpoints-da-api)
+- [📡 Funcionalidades e URLs](#-funcionalidades-e-urls)
 - [🌐 Deploy da API](#-deploy-da-api)
 
 ---
@@ -29,16 +29,15 @@
 - Maven
 - Banco de dados Oracle
 - JPA (Hibernate)
-- Validação com Jakarta Bean Validation
-- RESTful APIs
+- Spring MVC com Thymeleaf
 
 ---
 
 ## 📖 Descrição do Projeto
 
-Este projeto é uma API simples de gerenciamento de ferramentas, desenvolvida para a **CP4 da disciplina de Java Advanced** na faculdade.  
-Ela tem como objetivo permitir o cadastro, consulta, atualização e exclusão de ferramentas, facilitando o controle dos recursos disponíveis.  
-O foco principal foi praticar conceitos de RESTful API, autenticação e manipulação de dados em banco Oracle utilizando Spring Boot.
+Este projeto é um sistema web MVC de gerenciamento de ferramentas, desenvolvido para a CP4 da disciplina de Java Advanced na faculdade.
+Ele permite cadastrar, listar, atualizar e excluir ferramentas através de páginas HTML, proporcionando uma interface amigável para o usuário.
+O foco principal foi praticar conceitos de **Spring MVC**, **Thymeleaf** e **manipulação de dados com JPA e Oracle**.
 
 ---
 
@@ -47,42 +46,42 @@ O foco principal foi praticar conceitos de RESTful API, autenticação e manipul
 ```
 src
 └── main
-└── java
-└── com
-└── seu_pacote
-├── controller
-├── dto
-├── exception
-├── mapper
-├── model
-├── repository
-└── service
+    └── java
+        └── com
+            └── cp4_java_advanced
+                ├── controller
+                ├── model
+                ├── repository
+                └── service
+└── resources
+    └── static
+        ├── css # arquivos .css
+        └── js  # arquivos .js
+    ├── templates   # arquivos Thymeleaf (.html)
+    └── application.properties
 ```
 
-- 🕹️ **controller**: recebe e gerencia as requisições HTTP, fazendo a ponte entre o cliente e a lógica de negócio.
-- 📦 **dto**: objetos de transferência de dados usados para enviar e receber informações da API, garantindo segurança e clareza.
-- ⚠️ **exception**: classes para tratamento personalizado de erros e exceções da aplicação.
-- 🗺️ **mapper**: responsável por converter objetos entre diferentes camadas, como DTOs e modelos (entities).
-- 🧱 **model**: representa as entidades do banco de dados, definindo os atributos e relacionamentos.
-- 🗃️ **repository**: interfaces que fazem a comunicação direta com o banco de dados usando JPA.
-- 🔧 **service**: contém a lógica de negócio da aplicação, processando dados e regras antes de acessar o repositório ou retornar respostas.
+- 🕹️ **controller**: gerencia requisições HTTP e retorna páginas HTML com os dados do modelo.
+- 🧱 **model**: representa as entidades do banco de dados.
+- 🗃️ **repository**: interfaces JPA que fazem a comunicação com o banco.
+- 🔧 **service**: contém a lógica de negócio da aplicação.
+- 📄 **templates**: arquivos Thymeleaf que representam as páginas da aplicação (lista, cadastro, edição).
 
 ---
 
 ## ⚙️ Configuração do Spring Initializr
 
-Para iniciar o projeto, utilizamos o [Spring Initializr](https://start.spring.io/), configurando as dependências básicas necessárias para a API.  
+Para iniciar o projeto, utilizamos o [Spring Initializr](https://start.spring.io/), configurando as dependências básicas necessárias para o projeto.  
 
 Segue uma captura de tela (print) da configuração utilizada:
 
-![Configuração Spring Initializr](imagens/config-spring.png)
+![Configuração Spring Initializr](imagens/spring-cp-parte2.png)
 
 ### Dependências selecionadas:
-- Spring HATEOAS
 - Spring Web
 - Spring Boot DevTools (opcional para desenvolvimento)
 - Oracle Driver
-- Validation
+- Thymeleaf
 - Spring Data JPA
 
 ---
@@ -92,7 +91,7 @@ Segue uma captura de tela (print) da configuração utilizada:
 1. Clone este repositório:
 
 ```bash
-   git clone https://github.com/felipesora/cp4-java-advanced.git
+   git clone https://github.com/felipesora/cp4-java-advanced-parte-2.git
 ```
 2. Configure o banco Oracle e atualize as credenciais no arquivo `application.properties` (ou `application.yml`).
 3. Abra o projeto na sua IDE favorita (IntelliJ, Eclipse).
@@ -117,131 +116,50 @@ A classe `Ferramenta` representa a entidade principal do sistema, mapeada para a
 
 ---
 
-# 📡 Endpoints da API
+# 📡 Funcionalidades e URLs
 
-1. **📋 Listar todas as ferramentas**
+1. **Listar ferramentas**
 
-- **Método:** `GET`
 - **URL:** `/ferramentas`
-- **Descrição:** Retorna a lista completa de ferramentas cadastradas.
-- **Corpo da requisição:** *Nenhum*
-- **Resposta:**
-    - **Status:** 200 OK
-    - **Corpo:** Array JSON com objetos FerramentaResponseDTO contendo os dados das ferramentas e links HATEOAS.
-- **Erros possíveis:**
-    - **500 Internal Server Error:** Problema no servidor ao recuperar as ferramentas.
+- **Descrição:** Mostra a lista completa de ferramentas cadastradas.
+
+![Listar ferramentas](imagens/listar-ferramentas.png)
 
 ---
 
-2. **🔎 Buscar ferramenta por ID**
+2. **Filtrar ferramentas por nome ou tamanho**
 
-- **Método:** `GET`
-- **URL:** `/ferramentas/{id}`
-- **Descrição:**  Retorna uma ferramenta específica pelo seu ID.
-- **Parâmetros:**
-  - `id` (Long) — identificador da ferramenta
-- **Corpo da requisição:** *Nenhum*
-- **Resposta:**
-    - **Status:** 200 OK
-    - **Corpo:** Objeto JSON `FerramentaResponseDTO` com os dados da ferramenta e links HATEOAS.
-- **Erros possíveis:**
-  - **404 Not Found:** Ferramenta com o ID especificado não encontrada. 
-  - **400 Bad Request:** ID inválido (ex: formato errado). 
-  - **500 Internal Server Error:** Erro interno ao buscar a ferramenta.
+- **URL:** `/ferramentas?nome=&tamanho=`
+- **Descrição:**  Lista ferramentas filtradas pelo nome e/ou tamanho.
+
+![Filtrar ferramentas](imagens/listar-filtro.png)
 
 ---
 
-3. **➕ Cadastrar nova ferramenta**
+3. **Cadastrar nova ferramenta**
 
-- **Método:** `POST`
-- **URL:** `/ferramentas`
-- **Descrição:**  Cria uma nova ferramenta com os dados fornecidos.
-- **Corpo da requisição:**  JSON `FerramentaRequestDTO` com os dados da ferramenta (validados). Exemplo:
-```json
-{
-  "nome": "Martelo",
-  "tipo": "Manual",
-  "classificacao": "Uso Profissional",
-  "tamanho": "GRANDE",
-  "preco": 79.90,
-  "quantidade": 10
-}
-```
-- **Resposta:**
-    - **Status:** 201 Created
-    - **Headers:** `Location` com URL da ferramenta criada
-    - **Corpo:** Objeto JSON `FerramentaResponseDTO` com os dados da ferramenta criada e links HATEOAS.
-- **Erros possíveis:**
-    - **400 Bad Request:** Dados inválidos ou faltando campos obrigatórios.
-    - **500 Internal Server Error:** Erro interno ao buscar a ferramenta.
+- **URL:** `/ferramentas/cadastrar`
+- **Descrição:**  Página para cadastrar uma nova ferramenta.
+
+![Cadastrar nova ferramenta](imagens/cadastrar-ferramenta.png)
 
 ---
 
-4. **✏️ Atualizar ferramenta inteira**
+4. **Editar ferramenta**
 
-- **Método:** `PUT`
-- **URL:** `/ferramentas/{id}`
-- **Descrição:**  Atualiza completamente os dados da ferramenta com o ID informado.
-- **Parâmetros:**
-  - `id` (Long) — identificador da ferramenta
-- **Corpo da requisição:**  JSON `FerramentaRequestDTO` com os novos dados (validados).
-```json
-{
-  "nome": "Martelo de Borracha",
-  "tipo": "Manual",
-  "classificacao": "Uso Profissional",
-  "tamanho": "MEDIO",
-  "preco": 59.9,
-  "quantidade": 15
-}
-```
-- **Resposta:**
-    - **Status:** 200 OK
-    - **Corpo:** Objeto JSON `FerramentaResponseDTO` com os dados atualizados e links HATEOAS.
-- **Erros possíveis:**
-    - **400 Bad Request:** Dados inválidos ou formato incorreto.
-    - **404 Not Found:** Ferramenta com o ID especificado não encontrada.
-    - **500 Internal Server Error:** Erro interno ao buscar a ferramenta.
+- **URL:** `/ferramentas/editar/{id}`
+- **Descrição:**  Página para atualizar os dados de uma ferramenta existente.
+
+![Editar ferramenta](imagens/editar-ferramenta.png)
 
 ---
 
-5. **✂️ Atualização parcial da ferramenta**
+5. **Deletar ferramenta**
 
-- **Método:** `PATCH`
-- **URL:** `/ferramentas/{id}`
-- **Descrição:**  Atualiza parcialmente os dados da ferramenta com o ID informado.
-- **Parâmetros:**
-    - `id` (Long) — identificador da ferramenta
-- **Corpo da requisição:**  JSON `FerramentaPatchDTO` com os campos que deseja atualizar. Exemplo:
-```json
-{
-  "quantidade": 20
-}
-```
-- **Resposta:**
-    - **Status:** 200 OK
-    - **Corpo:** Objeto JSON `FerramentaResponseDTO` com os dados atualizados e links HATEOAS.
-- **Erros possíveis:**
-    - **400 Bad Request:** Dados inválidos ou mal formatados.
-    - **404 Not Found:** Ferramenta com o ID especificado não encontrada.
-    - **500 Internal Server Error:** Erro interno ao buscar a ferramenta.
+- **URL:** `/ferramentas/deletar/{id}`
+- **Descrição:**  Remove a ferramenta e redireciona para a lista.
 
----
-
-6. **🗑️ Deletar ferramenta**
-
-- **Método:** `DELETE`
-- **URL:** `/ferramentas/{id}`
-- **Descrição:**  Remove a ferramenta com o ID especificado.
-- **Parâmetros:**
-    - `id` (Long) — identificador da ferramenta
-- **Corpo da requisição:** *Nenhum*
-- **Resposta:**
-    - **Status:** 204 No Content
-    - **Corpo:** *Nenhum*
-- **Erros possíveis:**
-    - **404 Not Found:** Ferramenta com o ID não encontrada.
-    - **500 Internal Server Error:** Erro interno ao buscar a ferramenta.
+![Deletar ferramenta](imagens/excluir-ferramenta.png)
 
 ---
 
