@@ -340,3 +340,15 @@ body {
   justify-content: center;
   gap: 20px;
 }
+
+.mensagem-vazia {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #9ca3af;
+    background: #101418;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 400px;
+}

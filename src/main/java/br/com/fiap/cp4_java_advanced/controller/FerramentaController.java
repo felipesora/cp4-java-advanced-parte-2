@@ -37,6 +37,14 @@ public class FerramentaController {
 
         List<Ferramenta> ferramentas = service.listarFerramentas(tamanho, nome);
 
+        if (ferramentas.isEmpty()) {
+            if (tamanho == null && (nome == null || nome.isBlank())) {
+                model.addAttribute("mensagemVazio", true);
+            } else {
+                model.addAttribute("mensagemFiltro", true);
+            }
+        }
+
         model.addAttribute("ferramentas", ferramentas);
         return "ferramentas";
     }

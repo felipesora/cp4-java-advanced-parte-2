@@ -36,6 +36,14 @@
 
       <section class="lista_cards">
 
+        <p class="mensagem-vazia" th:if="${mensagemVazio}">
+          Nenhuma ferramenta cadastrada ainda.
+        </p>
+
+        <p class="mensagem-vazia" th:if="${mensagemFiltro}">
+          Nenhuma ferramenta encontrada com os filtros informados.
+        </p>
+
         <article class="card" th:each="ferramenta : ${ferramentas}">
           <div class="card_cabecalho">
             <h2 th:text="${ferramenta.nome}">Nome da ferramenta</h2>
