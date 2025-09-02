@@ -36,7 +36,7 @@
 
           <div class="card_botoes">
             <a th:href="@{'/ferramentas/editar/' + ${ferramenta.id}}" class="btn btn_editar">Editar</a>
-            <a th:href="@{'/ferramentas/deletar/' + ${ferramenta.id}}" class="btn btn_excluir">Excluir</a>
+            <button class="btn btn_excluir" th:onclick="'abrirModal(' + ${ferramenta.id} + ');'">Excluir</button>
           </div>
         </article>
 
@@ -46,5 +46,37 @@
     <footer class="rodape">
         <p>&copy; 2025 — Gestor de Ferramentas</p>
     </footer>
+
+    <!-- Modal -->
+    <div id="modalExcluir" class="modal">
+      <div class="modal-conteudo">
+        <h3>Confirmação</h3>
+        <p>Tem certeza que deseja excluir esta ferramenta?</p>
+        <div class="modal-botoes">
+          <button id="confirmarExcluir" class="btn btn_excluir">Sim, excluir</button>
+          <button onclick="fecharModal()" class="btn btn_cancelar">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let ferramentaIdParaExcluir = null;
+
+      function abrirModal(id) {
+        ferramentaIdParaExcluir = id;
+        document.getElementById('modalExcluir').style.display = 'flex';
+      }
+
+      function fecharModal() {
+        ferramentaIdParaExcluir = null;
+        document.getElementById('modalExcluir').style.display = 'none';
+      }
+
+      document.getElementById('confirmarExcluir').addEventListener('click', function() {
+        if(ferramentaIdParaExcluir) {
+          window.location.href = '/ferramentas/deletar/' + ferramentaIdParaExcluir;
+        }
+      });
+    </script>
   </body>
 </html>

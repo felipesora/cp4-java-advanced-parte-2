@@ -20,7 +20,7 @@ public class FerramentaService {
     private FerramentaRepository repository;
 
     public List<FerramentaResponseDTO> listarTodos() {
-        return repository.findAll()
+        return repository.findAllByOrderByIdAsc()
                 .stream()
                 .map(FerramentaMapper::toDTO)
                 .collect(Collectors.toList());
@@ -52,20 +52,6 @@ public class FerramentaService {
             var atualizada = repository.save(ferramentaAtual);
 
             return FerramentaMapper.toDTO(atualizada);
-    }
-
-    public Ferramenta atualizarParcial(Long id, FerramentaPatchDTO dto) {
-        var ferramenta = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ferramenta com id: " + id + " não encontrada"));
-
-        if (dto.getNome() != null) ferramenta.setNome(dto.getNome());
-        if (dto.getTipo() != null) ferramenta.setTipo(dto.getTipo());
-        if (dto.getClassificacao() != null) ferramenta.setClassificacao(dto.getClassificacao());
-        if (dto.getTamanho() != null) ferramenta.setTamanho(dto.getTamanho());
-        if (dto.getPreco() != null) ferramenta.setPreco(dto.getPreco());
-        if (dto.getQuantidade() != null) ferramenta.setQuantidade(dto.getQuantidade());
-
-        return repository.save(ferramenta);
     }
 
     public void deletar(Long id) {
