@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cadastrar Ferramenta</title>
   <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  <script th:src="@{/js/valida-form.js}" defer></script>
 </head>
 <body>
     <header class="cabecalho">
@@ -14,7 +15,7 @@
 
   <main class="container_main">
     <section class="container_formulario">
-      <form class="formulario" th:action="@{/ferramentas}" th:object="${ferramenta}" method="post" novalidate>
+      <form id="formFerramenta" class="formulario" th:action="@{/ferramentas}" th:object="${ferramenta}" method="post" novalidate>
         <div class="formulario_campo">
           <label for="nome">Nome</label>
           <small class="obrigatorio">Obrigatório — até 100 caracteres.</small>
@@ -55,6 +56,8 @@
           <small class="obrigatorio">Obrigatório</small>
           <input id="quantidade" th:field="*{quantidade}" type="number" step="1" min="0" placeholder="0" required />
         </div>
+
+        <p id="erroFormulario" class="erro" style="color:red; display:none;"></p>
 
         <div class="formulario_botoes">
           <button type="submit" class="btn btn_salvar">Salvar</button>
