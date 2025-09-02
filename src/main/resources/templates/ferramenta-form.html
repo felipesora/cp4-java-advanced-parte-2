@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastrar Ferramenta</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+    <header class="cabecalho">
+      <h1>Nova Ferramenta</h1>
+      <a href="ferramentas.html" class="btn btn_voltar">Voltar</a>
+    </header>
+
+  <main class="container_main">
+    <section class="container_formulario">
+      <form class="formulario" action="/ferramentas" method="post" novalidate>
+        <!-- Para edição, inclua um hidden com o ID -->
+        <!-- <input type="hidden" name="id" value="1" /> -->
+        <div class="formulario_campo">
+          <label for="nome">Nome</label>
+          <small class="obrigatorio">Obrigatório — até 100 caracteres.</small>
+          <input id="nome" name="nome" type="text" placeholder="Ex.: Chave Allen" required maxlength="100" />
+        </div>
+
+        <div class="formulario_campo">
+          <label for="tipo">Tipo</label>
+          <small class="obrigatorio">Obrigatório — até 70 caracteres.</small>
+          <input id="tipo" name="tipo" type="text" placeholder="Ex.: Manual" required maxlength="70" />
+        </div>
+
+        <div class="formulario_campo">
+          <label for="classificacao">Classificação</label>
+          <small class="obrigatorio">Obrigatório — até 70 caracteres.</small>
+          <input id="classificacao" name="classificacao" type="text" placeholder="Ex.: 10mm" required maxlength="70" />
+        </div>
+
+        <div class="formulario_campo">
+          <label for="tamanho">Tamanho</label>
+          <small class="obrigatorio">Obrigatório</small>
+          <select id="tamanho" name="tamanho" required>
+            <option value="" selected disabled>Selecione...</option>
+            <option value="PEQUENO">PEQUENO</option>
+            <option value="MEDIO">MEDIO</option>
+            <option value="GRANDE">GRANDE</option>
+          </select>
+        </div>
+
+        <div class="formulario_campo">
+          <label for="preco">Preço</label>
+          <small class="obrigatorio">Obrigatório</small>
+          <input id="preco" name="preco" type="number" step="0.01" min="0" placeholder="0,00" required />
+        </div>
+
+        <div class="formulario_campo">
+          <label for="quantidade">Quantidade</label>
+          <small class="obrigatorio">Obrigatório</small>
+          <input id="quantidade" name="quantidade" type="number" step="1" min="0" placeholder="0" required />
+        </div>
+
+        <div class="formulario_botoes">
+          <button type="submit" class="btn btn_salvar">Salvar</button>
+          <a href="ferramentas.html" class="btn btn_cancelar">Cancelar</a>
+        </div>
+
+      </form>
+    </section>
+  </main>
+
+  <footer class="rodape">
+        <p>&copy; 2025 — Gestor de Ferramentas</p>
+  </footer>
+</body>
+</html>

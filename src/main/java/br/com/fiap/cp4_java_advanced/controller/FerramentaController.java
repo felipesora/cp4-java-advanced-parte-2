@@ -34,20 +34,10 @@ public class FerramentaController {
         return "ferramentas";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<FerramentaResponseDTO> buscarPorId(@PathVariable Long id) {
-        var ferramenta = service.buscarPorId(id);
-
-        return ResponseEntity.ok(ferramenta);
-    }
-
-    @PostMapping
-    public ResponseEntity<FerramentaResponseDTO> salvar(@RequestBody @Valid FerramentaRequestDTO dto, UriComponentsBuilder uriBuilder) {
-        var ferramenta = service.salvar(FerramentaMapper.toEntity(dto));
-
-        var uri = uriBuilder.path("/ferramentas/{id}").buildAndExpand(ferramenta.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(ferramenta);
+    @GetMapping("/cadastrar")
+    public String cadastrarNovaFerramenta(Model model) {
+        model.addAttribute("ferramenta", new Ferramenta());
+        return "ferramenta-form";
     }
 
     @PutMapping("/{id}")
