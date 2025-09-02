@@ -14,9 +14,7 @@
 
   <main class="container_main">
     <section class="container_formulario">
-      <form class="formulario" th:action="@{/ferramentas}" method="post" th:object="${ferramenta}" novalidate>
-        <!-- Para edição, inclua um hidden com o ID -->
-        <!-- <input type="hidden" name="id" value="1" /> -->
+      <form class="formulario" th:action="@{/ferramentas}" th:object="${ferramenta}" method="post" novalidate>
         <div class="formulario_campo">
           <label for="nome">Nome</label>
           <small class="obrigatorio">Obrigatório — até 100 caracteres.</small>

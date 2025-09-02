@@ -37,7 +37,7 @@ public class FerramentaController {
     @GetMapping("/cadastrar")
     public String NovaFerramentaForm(Model model) {
         model.addAttribute("ferramenta", new Ferramenta());
-        return "ferramenta-form";
+        return "ferramenta-form-cadastro";
     }
 
     @PostMapping
@@ -46,24 +46,16 @@ public class FerramentaController {
         return "redirect:/ferramentas";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<FerramentaResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid FerramentaRequestDTO dto) {
-        var ferramentaAtualizada = service.atualizar(id, FerramentaMapper.toEntity(dto));
-
-        return ResponseEntity.ok(ferramentaAtualizada);
+    @GetMapping("/editar/{id}")
+    public String editarFerramentaForm(@PathVariable Long id, Model model) {
+        Ferramenta ferramenta = service.buscarPorId(id);
+        model.addAttribute("ferramenta", ferramenta);
+        return "ferramenta-form-editar";
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<FerramentaResponseDTO> atualizarParcial(@PathVariable Long id, @RequestBody @Valid FerramentaPatchDTO dto) {
-        var ferramentaAtualizada = FerramentaMapper.toDTO(service.atualizarParcial(id, dto));
-
-        return ResponseEntity.ok(ferramentaAtualizada);
+    @PostMapping("/editar/{id}")
+    public String atualizarFerramenta(@PathVariable Long id, @ModelAttribute Ferramenta ferramenta) {
+        service.atualizar(id, ferramenta);
+        return "redirect:/ferramentas";
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        service.deletar(id);
-        return ResponseEntity.noContent().build();
-    }
-
 }

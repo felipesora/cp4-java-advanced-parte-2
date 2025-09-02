@@ -26,11 +26,11 @@ public class FerramentaService {
                 .collect(Collectors.toList());
     }
 
-    public FerramentaResponseDTO buscarPorId(Long id) {
+    public Ferramenta buscarPorId(Long id) {
         var ferramenta = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ferramenta com id: " + id + " não encontrada"));
+                .orElseThrow(() -> new RuntimeException("Ferramenta com id: " + id + " não encontrada"));
 
-        return FerramentaMapper.toDTO(ferramenta);
+        return ferramenta;
     }
 
     public FerramentaResponseDTO salvar(Ferramenta ferramenta) {
