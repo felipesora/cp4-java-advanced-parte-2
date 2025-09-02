@@ -1,26 +1,13 @@
 package br.com.fiap.cp4_java_advanced.controller;
 
-import br.com.fiap.cp4_java_advanced.dto.FerramentaPatchDTO;
-import br.com.fiap.cp4_java_advanced.dto.FerramentaRequestDTO;
-import br.com.fiap.cp4_java_advanced.dto.FerramentaResponseDTO;
-import br.com.fiap.cp4_java_advanced.mapper.FerramentaMapper;
 import br.com.fiap.cp4_java_advanced.modal.Ferramenta;
 import br.com.fiap.cp4_java_advanced.modal.enums.Tamanho;
 import br.com.fiap.cp4_java_advanced.service.FerramentaService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Controller
 @RequestMapping("/ferramentas")

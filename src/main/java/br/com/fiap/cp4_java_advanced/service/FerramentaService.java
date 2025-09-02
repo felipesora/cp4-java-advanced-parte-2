@@ -1,18 +1,11 @@
 package br.com.fiap.cp4_java_advanced.service;
 
-import br.com.fiap.cp4_java_advanced.dto.FerramentaPatchDTO;
-import br.com.fiap.cp4_java_advanced.dto.FerramentaRequestDTO;
-import br.com.fiap.cp4_java_advanced.dto.FerramentaResponseDTO;
-import br.com.fiap.cp4_java_advanced.mapper.FerramentaMapper;
 import br.com.fiap.cp4_java_advanced.modal.Ferramenta;
 import br.com.fiap.cp4_java_advanced.modal.enums.Tamanho;
 import br.com.fiap.cp4_java_advanced.repository.FerramentaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FerramentaService {
@@ -42,14 +35,12 @@ public class FerramentaService {
         return ferramenta;
     }
 
-    public FerramentaResponseDTO salvar(Ferramenta ferramenta) {
-        var ferramentaSalva = repository.save(ferramenta);
-        return FerramentaMapper.toDTO(ferramentaSalva);
+    public Ferramenta salvar(Ferramenta ferramenta) {
+        return repository.save(ferramenta);
     }
 
-    public FerramentaResponseDTO atualizar(Long id, Ferramenta ferramentaNova) {
-            var ferramentaAtual = repository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Ferramenta com id: " + id + " não encontrada"));
+    public Ferramenta atualizar(Long id, Ferramenta ferramentaNova) {
+            var ferramentaAtual = buscarPorId(id);
 
             ferramentaAtual.setNome(ferramentaNova.getNome());
             ferramentaAtual.setTipo(ferramentaNova.getTipo());
@@ -58,14 +49,11 @@ public class FerramentaService {
             ferramentaAtual.setPreco(ferramentaNova.getPreco());
             ferramentaAtual.setQuantidade(ferramentaNova.getQuantidade());
 
-            var atualizada = repository.save(ferramentaAtual);
-
-            return FerramentaMapper.toDTO(atualizada);
+            return repository.save(ferramentaAtual);
     }
 
     public void deletar(Long id) {
-        var ferramenta = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ferramenta com id: " + id + " não encontrada"));
+        var ferramenta = buscarPorId(id);
 
         repository.delete(ferramenta);
     }
