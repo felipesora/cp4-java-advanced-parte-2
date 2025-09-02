@@ -5,6 +5,7 @@ import br.com.fiap.cp4_java_advanced.dto.FerramentaRequestDTO;
 import br.com.fiap.cp4_java_advanced.dto.FerramentaResponseDTO;
 import br.com.fiap.cp4_java_advanced.mapper.FerramentaMapper;
 import br.com.fiap.cp4_java_advanced.modal.Ferramenta;
+import br.com.fiap.cp4_java_advanced.modal.enums.Tamanho;
 import br.com.fiap.cp4_java_advanced.service.FerramentaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,14 @@ public class FerramentaController {
     private FerramentaService service;
 
     @GetMapping
-    public String listarTodasFerramentas(Model model) {
-        model.addAttribute("ferramentas", service.listarTodos());
+    public String listarFerramentas(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) Tamanho tamanho,
+            Model model) {
+
+        List<Ferramenta> ferramentas = service.listarFerramentas(tamanho, nome);
+
+        model.addAttribute("ferramentas", ferramentas);
         return "ferramentas";
     }
 

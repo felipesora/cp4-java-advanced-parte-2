@@ -14,6 +14,26 @@
     </header>
 
     <main class="container_main">
+      <section class="secao_filtro">
+        <h2>Filtros:</h2>
+        <form th:action="@{/ferramentas}" method="get" class="filtro_form">
+          <input type="text" name="nome" placeholder="Filtrar por Nome"
+                 th:value="${param.nome}">
+
+          <select name="tamanho">
+            <option value="">Todos os tamanhos</option>
+            <option value="PEQUENO" th:selected="${param.tamanho=='PEQUENO'}">PEQUENO</option>
+            <option value="MEDIO" th:selected="${param.tamanho=='MEDIO'}">MÉDIO</option>
+            <option value="GRANDE" th:selected="${param.tamanho=='GRANDE'}">GRANDE</option>
+          </select>
+
+          <div class="filtro_botoes">
+            <button type="submit" class="btn_filtrar">Filtrar</button>
+            <a href="/ferramentas" class="btn_limpar_filtro">Limpar Filtro</a>
+          </div>
+        </form>
+      </section>
+
       <section class="lista_cards">
 
         <article class="card" th:each="ferramenta : ${ferramentas}">

@@ -5,6 +5,7 @@ import br.com.fiap.cp4_java_advanced.dto.FerramentaRequestDTO;
 import br.com.fiap.cp4_java_advanced.dto.FerramentaResponseDTO;
 import br.com.fiap.cp4_java_advanced.mapper.FerramentaMapper;
 import br.com.fiap.cp4_java_advanced.modal.Ferramenta;
+import br.com.fiap.cp4_java_advanced.modal.enums.Tamanho;
 import br.com.fiap.cp4_java_advanced.repository.FerramentaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,19 @@ public class FerramentaService {
     @Autowired
     private FerramentaRepository repository;
 
-    public List<FerramentaResponseDTO> listarTodos() {
-        return repository.findAllByOrderByIdAsc()
-                .stream()
-                .map(FerramentaMapper::toDTO)
-                .collect(Collectors.toList());
+    public List<Ferramenta> listarFerramentas(Tamanho tamanho, String nome) {
+        boolean temNome = nome != null && !nome.isBlank();
+        boolean temTamanho = tamanho != null;
+
+        if (temNome && temTamanho) {
+            return repository.findByNomeContainingIgnoreCaseAndTamanhoOrderByIdAsc(nome, tamanho);
+        } else if (temTamanho) {
+            return repository.findByTamanhoOrderByIdAsc(tamanho);
+        } else if (temNome) {
+            return repository.findByNomeContainingIgnoreCaseOrderByIdAsc(nome);
+        } else {
+            return repository.findAllByOrderByIdAsc();
+        }
     }
 
     public Ferramenta buscarPorId(Long id) {
