@@ -1,4 +1,4 @@
-# 🛠️ API de Ferramentas
+# 🛠️ MVC de Ferramentas
 
 ---
 
@@ -165,11 +165,20 @@ A classe `Ferramenta` representa a entidade principal do sistema, mapeada para a
 
 ## 🌐 Deploy da API
 
-A API está publicada e disponível para acesso no Render.  
+O projeto está publicado e disponível para acesso no Render.  
 Confira o projeto funcionando no link abaixo:  
 
-🔗 [Acessar API no Render](https://cp4-java-advanced.onrender.com/ferramentas)
+🔗 [Acessar API no Render](https://cp4-java-advanced-parte-2.onrender.com/ferramentas)
 
->**Nota:** A URL base da API é `https://cp4-java-advanced.onrender.com`
-Por exemplo, para listar as ferramentas, acesse:
-`https://cp4-java-advanced.onrender.com/ferramentas`
+>**Nota:** A URL base é `https://cp4-java-advanced-parte-2.onrender.com`
+Por exemplo, para acessar a página principal, acesse:
+`https://cp4-java-advanced-parte-2.onrender.com/ferramentas`
+
+---
+
+## 📹 Demonstração em Vídeo
+
+Gravamos um vídeo de demonstração do sistema em funcionamento, mostrando as principais funcionalidades:  
+🔗 [Assistir no YouTube](https://www.youtube.com/watch?v=ICUOo5QImGo)
+
+---
