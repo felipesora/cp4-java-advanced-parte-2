@@ -168,7 +168,7 @@ A classe `Ferramenta` representa a entidade principal do sistema, mapeada para a
 O projeto está publicado e disponível para acesso no Render.  
 Confira o projeto funcionando no link abaixo:  
 
-🔗 [Acessar API no Render](https://cp4-java-advanced-parte-2.onrender.com/ferramentas)
+🔗 [Acessar MVC no Render](https://cp4-java-advanced-parte-2.onrender.com/ferramentas)
 
 >**Nota:** A URL base é `https://cp4-java-advanced-parte-2.onrender.com`
 Por exemplo, para acessar a página principal, acesse:
